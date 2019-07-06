@@ -10,9 +10,6 @@ class RetentionStatsTableSeeder extends CsvSeeder
         $this->file = '/database/seeds/csv/retention_stats.csv';
         $this->delimiter = ';';
         $this->timestamps = false;
-        $this->defaults = [
-            'onboarding_percentage' => 0 //This columns had a missing data in the CSV
-        ];
     }
 
     /**

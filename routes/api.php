@@ -18,5 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('retention-stats', 'RetentionStatController@index');
+Route::get('retention-stats/weekly-cohorts', 'RetentionStatController@weeklyCohorts');
 Route::get('retention-stats/{retention_stat}', 'RetentionStatController@show');
+Route::get('retention-stats', 'RetentionStatController@index');

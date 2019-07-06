@@ -25,4 +25,13 @@ class RetentionStatController extends Controller
     {
         return response()->json($retentionStat);
     }
+
+    /**
+     * Returns weekly cohors
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function weeklyCohorts(){
+        return response()->json(RetentionStat::getWeeklyCohorts());
+    }
 }

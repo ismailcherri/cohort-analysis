@@ -3,12 +3,12 @@
 namespace Tests\Feature;
 
 use App\RetentionStat;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RetentionStatControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /**
      * Test retention stat controller index
@@ -61,5 +61,22 @@ class RetentionStatControllerTest extends TestCase
                 'user_id' => $retentionStat->user_id
             ])
         ;
+    }
+
+    public function testRetentionControllerWeeklyCohorts(){
+        $this->seed(\RetentionStatsTableSeeder::class);
+
+        $response = $this->get('/api/retention-stats/weekly-cohorts');
+        $weeklyCohorts = json_decode($response->getContent(), true);
+        $first = reset($weeklyCohorts);
+
+        $response->assertStatus(200);
+
+        $this->assertIsArray($weeklyCohorts);
+        $this->assertNotEmpty($weeklyCohorts);
+        $this->assertArrayHasKey('name', $first);
+        $this->assertArrayHasKey('data', $first);
+        $this->assertNotEmpty($first['data']);
+        $this->assertIsString($first['name']);
     }
 }

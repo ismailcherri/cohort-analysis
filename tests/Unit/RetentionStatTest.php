@@ -3,12 +3,13 @@
 namespace Tests\Unit;
 
 use App\RetentionStat;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Collection;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RetentionStatTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /**
      * Create retention stat test
@@ -23,10 +24,20 @@ class RetentionStatTest extends TestCase
         $this->assertDatabaseHas('retention_stats', [
             'user_id' => $retentionStat->user_id
         ]);
+    }
 
+    public function testWeeklyCohortsRetentionStats(){
+        $this->seed(\RetentionStatsTableSeeder::class);
 
+        $weeklyCohorts = RetentionStat::getWeeklyCohorts();
+        $first = $weeklyCohorts->first();
 
-
-
+        $this->assertInstanceOf(Collection::class, $weeklyCohorts);
+        $this->assertNotEmpty($weeklyCohorts);
+        $this->assertArrayHasKey('name', $first);
+        $this->assertArrayHasKey('data', $first);
+        $this->assertIsString($first['name']);
+        $this->assertInstanceOf(Collection::class, $first['data']);
+        $this->assertNotEmpty($first['data']);
     }
 }

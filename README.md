@@ -41,9 +41,9 @@ user: demo@example.com
 pass: demo
 ```
 9. Visit `http://127.0.0.1:8000/retention-stats`
->
+
 > **Note:** `http://127.0.0.1` can be replaced by `http://localhost` depending on your hosts file setup
->
+
 
 ## Running the tests
 From the root of the project run:
@@ -72,4 +72,28 @@ password=demo
 ```
 4. You should get a JSON response with a `access_token` that should be used as `Bearer Athentication` to the subsequent requests
 
-Thanks!
+| Method   | URI                                     | Action                                                                    |
+|----------|-----------------------------------------|---------------------------------------------------------------------------|
+| GET|HEAD | api/retention-stats                     | App\Http\Controllers\RetentionStatController@index                        |
+| GET|HEAD | api/retention-stats/weekly-cohorts      | App\Http\Controllers\RetentionStatController@weeklyCohorts                |
+| GET|HEAD | api/retention-stats/{retention_stat}    | App\Http\Controllers\RetentionStatController@show                         |
+| GET|HEAD | api/user                                | Closure                                                                   |
+| GET|HEAD | oauth/authorize                         | Laravel\Passport\Http\Controllers\AuthorizationController@authorize       |
+| DELETE   | oauth/authorize                         | Laravel\Passport\Http\Controllers\DenyAuthorizationController@deny        |
+| POST     | oauth/authorize                         | Laravel\Passport\Http\Controllers\ApproveAuthorizationController@approve  |
+| GET|HEAD | oauth/clients                           | Laravel\Passport\Http\Controllers\ClientController@forUser                |
+| POST     | oauth/clients                           | Laravel\Passport\Http\Controllers\ClientController@store                  |
+| PUT      | oauth/clients/{client_id}               | Laravel\Passport\Http\Controllers\ClientController@update                 |
+| DELETE   | oauth/clients/{client_id}               | Laravel\Passport\Http\Controllers\ClientController@destroy                |
+| GET|HEAD | oauth/personal-access-tokens            | Laravel\Passport\Http\Controllers\PersonalAccessTokenController@forUser   |
+| POST     | oauth/personal-access-tokens            | Laravel\Passport\Http\Controllers\PersonalAccessTokenController@store     |
+| DELETE   | oauth/personal-access-tokens/{token_id} | Laravel\Passport\Http\Controllers\PersonalAccessTokenController@destroy   |
+| GET|HEAD | oauth/scopes                            | Laravel\Passport\Http\Controllers\ScopeController@all                     |
+| POST     | oauth/token                             | Laravel\Passport\Http\Controllers\AccessTokenController@issueToken        |
+| POST     | oauth/token/refresh                     | Laravel\Passport\Http\Controllers\TransientTokenController@refresh        |
+| GET|HEAD | oauth/tokens                            | Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@forUser |
+| DELETE   | oauth/tokens/{token_id}                 | Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@destroy |
+
+
+### License
+GPL

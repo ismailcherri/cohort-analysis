@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body p-5">
                     <h1 class="cart-title">Welcome!</h1>
-                    <p class="card-text">To our system.</p>
+                    <p class="card-text">To our system. Please login to access our data</p>
                 </div>
             </div>
         </div>

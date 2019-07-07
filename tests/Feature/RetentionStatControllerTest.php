@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\RetentionStat;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class RetentionStatControllerTest extends TestCase
@@ -20,6 +22,10 @@ class RetentionStatControllerTest extends TestCase
         $retentionStat1 = factory(RetentionStat::class)->create();
         $retentionStat2 = factory(RetentionStat::class)->create();
         $retentionStat3 = factory(RetentionStat::class)->create();
+        Passport::actingAs(
+            factory(User::class)->create(),
+            ['create-servers']
+        );
 
         $response = $this->get('/api/retention-stats');
 
@@ -44,6 +50,10 @@ class RetentionStatControllerTest extends TestCase
     public function testRetentionStatControllerShow(){
         $retentionStat = factory(RetentionStat::class)->create();
         $dbRetentionStat = RetentionStat::where('user_id', $retentionStat->user_id)->first();
+        Passport::actingAs(
+            factory(User::class)->create(),
+            ['create-servers']
+        );
 
         $response = $this->get('/api/retention-stats/' . $dbRetentionStat->id);
 
@@ -64,7 +74,11 @@ class RetentionStatControllerTest extends TestCase
     }
 
     public function testRetentionControllerWeeklyCohorts(){
-        $this->seed(\RetentionStatsTableSeeder::class);
+        $this->seed(\DatabaseSeeder::class);
+        Passport::actingAs(
+            factory(User::class)->create(),
+            ['create-servers']
+        );
 
         $response = $this->get('/api/retention-stats/weekly-cohorts');
         $weeklyCohorts = json_decode($response->getContent(), true);

@@ -25,18 +25,23 @@
                 <li class="nav-item {{ Route::currentRouteName() === 'home' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item {{ Route::currentRouteName() === 'retention-stats' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('retention-stats') }}">Retention Stats</a>
-                </li>
+                @auth
+                    <li class="nav-item {{ Route::currentRouteName() === 'retention-stats' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('retention-stats') }}">Retention Stats</a>
+                    </li>
+                @endauth
             </ul>
             @if (Route::has('login'))
                 <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                        </li>
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Login</a>
                         </li>
+
                     @endauth
                 </ul>
             @endif
@@ -46,9 +51,9 @@
 </nav>
 
 <div id="main">
-@section('content')
+    @section('content')
 
-@show
+    @show
 </div>
 @yield('scripts')
 </body>

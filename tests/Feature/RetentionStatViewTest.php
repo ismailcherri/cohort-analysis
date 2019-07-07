@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RetentionStatViewTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * A basic feature test example.
      *
@@ -15,6 +18,10 @@ class RetentionStatViewTest extends TestCase
      */
     public function testRetentionStatsPage()
     {
+        Passport::actingAs(
+            factory(User::class)->create(),
+            ['create-servers']
+        );
         $response = $this->get('/retention-stats');
 
         $response->assertStatus(200);

@@ -27,7 +27,7 @@ class RetentionStatTest extends TestCase
     }
 
     public function testWeeklyCohortsRetentionStats(){
-        $this->seed(\RetentionStatsTableSeeder::class);
+        $this->seed(\DatabaseSeeder::class);
 
         $weeklyCohorts = RetentionStat::getWeeklyCohorts();
         $first = $weeklyCohorts->first();

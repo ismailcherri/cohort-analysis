@@ -72,6 +72,8 @@ password=demo
 ```
 4. You should get a JSON response with a `access_token` that should be used as `Bearer Athentication` to the subsequent requests
 
+### API Endpoints
+
 | Method   | URI                                     | Action                                                                    |
 |----------|-----------------------------------------|---------------------------------------------------------------------------|
 | GET|HEAD | api/retention-stats                     | App\Http\Controllers\RetentionStatController@index                        |

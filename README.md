@@ -55,3 +55,21 @@ From the root of the project run:
 $ npm install
 $ npm run dev
 ```
+
+## Testing the API through an external HTTP client
+1. From the root folder of the project run & follow the instruction:
+```
+$ php artisan passport:client --password
+```
+2. Take note of the client ID and secrte
+3, While the app is running i.e. `$ php artisan serve`, send a post request to `http://127.0.0.1/oauth/token` with the following form data:
+```
+grant_type=password
+client_id=THE_ID
+client_secret=THE_SECRET
+username=demo@example.com
+password=demo
+```
+4. You should get a JSON response with a `access_token` that should be used as `Bearer Athentication` to the subsequent requests
+
+Thanks!

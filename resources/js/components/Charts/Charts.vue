@@ -20,38 +20,40 @@
         data(){
             return {
                 url: '/api/retention-stats/weekly-cohorts',
-                chartOptions: {}
+                chartOptions: {
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: 'Weekly Retention Curve'
+                    },
+                    xAxis: {
+                        categories: [0,20,40,50,70,90,99,100],
+                        title: 'Onboarding Steps'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'User Percentage (%)'
+                        },
+                        labels: {
+                            formatter: function() {
+                                return this.value + ' %';
+                            }
+                        },
+                        min: 0,
+                        max: 100
+                    },
+                    series: []
+                }
             }
         },
         mounted(){
             axios.get(this.url)
                 .then(response => {
-                    this.chartOptions = {
-                        chart: {
-                            type: 'spline'
-                        },
-                        title: {
-                            text: 'Weekly Retention Curve'
-                        },
-                        xAxis: {
-                            categories: [0,20,40,50,70,90,99,100],
-                            title: 'Onboarding Steps'
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'User Percentage (%)'
-                            },
-                            labels: {
-                                formatter: function() {
-                                    return this.value + ' %';
-                                }
-                            },
-                            min: 0,
-                            max: 100
-                        },
-                        series: response.data
-                    };
+                    response.data.forEach(series => {
+                        this.$children[0].chart.addSeries(series)
+                    })
                 })
-        },
+        }
     };
 </script>
